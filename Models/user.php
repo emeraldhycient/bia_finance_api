@@ -9,7 +9,7 @@ class User extends Connection
     {
         $userid = Helpers::filter($userid);
         $data = [];
-        $sql = "SELECT * FROM transactions WHERE userid = ? ORDER BY id ASC";
+        $sql = "SELECT * FROM transactions WHERE userid = ? ORDER BY id DESC";
         $query = self::$connect->prepare($sql);
         $query->bind_param("s", $userid);
         $query->execute();
@@ -44,9 +44,7 @@ class User extends Connection
                         $query->bind_param("s", $userid);
                         $query->execute();
                         $body = "
-                          <center>
                                 <h6> transfer successful, $amount has been debited from your account</h6>
-                          </center>
                           ";
                         Helpers::sendmail($email, "debit", "debit of $amount", $body);
                         return Helpers::Response(200, "success", "transfer successful", '');
@@ -90,9 +88,7 @@ class User extends Connection
                             $query->bind_param("s", $userid);
                             $query->execute();
                             $body = "
-                              <center>
                                     <h6> cash delivery scheduled, tracking :$tracking </h6>
-                              </center>
                               ";
                             Helpers::sendmail($email, "debit", "debit of $amount", $body);
                             return Helpers::Response(200, "success", "cash delivery scheduled, tracking :$tracking ", '');

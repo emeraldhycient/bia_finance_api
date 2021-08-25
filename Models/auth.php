@@ -104,9 +104,7 @@ class Auth extends Connection
 
     if($query->affected_rows > 0){
         $body = "
-        <center>
         <h6>your otp is : $otp</h6>
-        </center>
         ";
         Helpers::sendmail($email,"biafinancebank","transaction otp",$body);
         return Helpers::Response(200,"success","otp sent pls check your email","");
