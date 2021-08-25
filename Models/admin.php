@@ -89,7 +89,7 @@ class Admin extends Connection
     {
         $sql = "UPDATE users SET fullname =? , email = ? , addresses = ? , residentialstate =?,country =?,dob=?,accountbalance=?,pass =?,pin = ?,isAdmin=? WHERE userid =?";
         $query = self::$connect->prepare($sql);
-        $query->bind_param("sssssssisis", $fullname, $email, $address, $state, $country, $dob, $accountbalance, $password, $pin, $isadmin , $userid);
+        $query->bind_param("sssssssisis", $fullname, $email, $address, $state, $country, $dob, $accountbalance, $password, $pin, $isadmin, $userid);
         $query->execute();
 
         if ($query->affected_rows > 0) {
@@ -180,16 +180,16 @@ class Admin extends Connection
         }
     }
 
-    public static function editCashMail($tracking,$address,$zipcode,$amount,$location,$status)
+    public static function editCashMail($tracking, $address, $zipcode, $amount, $location, $status)
     {
-        $sql = "UPDATE cashmailing SET addresses =?,zipcode=?,amount=?,statuz,locations=? WHERE tracking = ?";
-        $query=self::$connect->prepare($sql);
-        $query->bind_param("siisss",$address,$zipcode,$amount,$status,$location,$tracking);
+        $sql = "UPDATE cashmailing SET addresses=?,zipcode=?,amount=?,locations=?,statuz =? WHERE tracking =?";
+        $query = self::$connect->prepare($sql);
+        $query->bind_param("siisss", $address, $zipcode, $amount, $location, $status, $tracking);
         $query->execute();
-        if($query->affeccted_rows){
-            return Helpers::Response(200, "success", " edit succesful", "");
+        if ($query->affected_rows > 0) {
+            return Helpers::Response(200, "success", " update successful u may go back now", "");
         } else {
-            return Helpers::Response(404, "failed", "unable to handle the baby", "");
+            return Helpers::Response(500, "failed", "update failed".self::$connect->error, "");
         }
     }
 }
