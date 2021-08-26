@@ -148,7 +148,7 @@ class User extends Connection
     public static function cashMail($tracking)
     {
         $tracking = Helpers::filter($tracking);
-        $sql = "SELECT * FROM cashmailing WHERE tracking =?";
+        $sql = "SELECT * FROM `cashmailing` WHERE tracking =?";
         $query = self::$connect->prepare($sql);
         $query->bind_param("s", $tracking);
         $query->execute();

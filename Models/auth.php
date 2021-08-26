@@ -25,9 +25,9 @@ class Auth extends Connection
                     $_SESSION["userid"] = $row->userid;
                     $data = [
                         "userid" => $row->userid,
-                        "isadmin" => (bool)$row->isadmin,
+                        "isadmin" => (boolean)$row->isadmin,
                     ];
-                    if ((bool)$row->isadmin) {
+                    if ((boolean)$row->isadmin) {
                         $hash = "biafinance-" . uniqid();
                         $_SESSION["hash"] = $hash;
                         $data["hash"] = $hash;

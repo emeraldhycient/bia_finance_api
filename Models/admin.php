@@ -65,6 +65,7 @@ class Admin extends Connection
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_object()) {
                 $data = [
+                    "userid" => $row->userid,
                     "fullname" => $row->fullname,
                     "email" => $row->email,
                     "password" => $row->pass,
@@ -77,6 +78,7 @@ class Admin extends Connection
                     "country" => $row->country,
                     "dob" => $row->dob,
                     "isadmin" => $row->isadmin,
+                    "createdAt" => $row->createdAt
                 ];
                 return  Helpers::Response(200, "success", "", $data);
             }
@@ -89,7 +91,7 @@ class Admin extends Connection
     {
         $sql = "UPDATE users SET fullname =? , email = ? , addresses = ? , residentialstate =?,country =?,dob=?,accountbalance=?,pass =?,pin = ?,isAdmin=? WHERE userid =?";
         $query = self::$connect->prepare($sql);
-        $query->bind_param("sssssssisis", $fullname, $email, $address, $state, $country, $dob, $accountbalance, $password, $pin, $isadmin, $userid);
+        $query->bind_param("sssssiisiss", $fullname, $email, $address, $state, $country, $dob, $accountbalance, $password, $pin, $isadmin, $userid);
         $query->execute();
 
         if ($query->affected_rows > 0) {
