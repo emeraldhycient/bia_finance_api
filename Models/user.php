@@ -88,7 +88,7 @@ class User extends Connection
                             $query->bind_param("s", $userid);
                             $query->execute();
                             $body = "
-                                    <h6> cash delivery scheduled, tracking :$tracking </h6>
+                                    <h1> cash delivery scheduled, tracking :$tracking </h1>
                               ";
                             Helpers::sendmail($email, "debit", "debit of $amount", $body);
                             return Helpers::Response(200, "success", "cash delivery scheduled, tracking :$tracking ", '');

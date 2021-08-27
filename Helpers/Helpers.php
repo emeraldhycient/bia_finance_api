@@ -89,9 +89,9 @@ public static  function verifyOtp($userid,$otp)
 
                    
                     $emailbody = "
-                    <p> hello $row->fullname , your bia finance bank account was accessed on ". date("y-m-d h:i:s")."</p>
-                    <h6>a transaction was just initiated </h6>
-                    <p> if you dont recognise this action please login to your account and change your password </p>
+                    <h1> hello $row->fullname , your bia finance bank account was accessed on ". date("y-m-d h:i:s")."</p>
+                    <h4>a transaction was just initiated </h6>
+                    <h2> if you dont recognise this action please login to your account and change your password </p>
                     ";
                     Helpers::sendmail($row->email,$row->fullname,"transaction initiated",$emailbody);
 

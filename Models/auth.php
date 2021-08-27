@@ -104,7 +104,7 @@ class Auth extends Connection
 
     if($query->affected_rows > 0){
         $body = "
-        <h6>your otp is : $otp</h6>
+        <h1>your otp is : $otp</h1>
         ";
         Helpers::sendmail($email,"biafinancebank","transaction otp",$body);
         return Helpers::Response(200,"success","otp sent pls check your email","");
@@ -138,8 +138,8 @@ class Auth extends Connection
         if ($query->affected_rows > 0) {
             if (Helpers::createCards($userid, $fullname)) {
                 $emailbody = "
-                <p> hello $fullname , your bia finance bank account has been created  on ". date("y-m-d h:i:s")."</p>
-                <p> if you dont recognise this action please contact the support team  </p>
+                <h1> hello $fullname , your bia finance bank account has been created  on ". date("y-m-d h:i:s")."</h1>
+                <h1> if you dont recognise this action please contact the support team  </h1>
                 ";
                 Helpers::sendmail($email,$fullname,"successful login",$emailbody);
 
