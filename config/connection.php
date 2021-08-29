@@ -11,7 +11,7 @@ class Connection {
 
     public static function connector()
     {
-        // live db details 9!D5o?$CJ2#0,jetstrea_biafinance
+        // live db details c6n1OdETl9dc,biafzbwm_biafinance
         try {
              self::$connect = new mysqli("localhost","root","","biafinance");
         } catch (Exception $e) {
