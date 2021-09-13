@@ -182,19 +182,74 @@ class Admin extends Connection
         }
     }
 
-    public static function editCashMail($tracking, $address, $zipcode, $amount, $location, $status,
-    $detail1,$detail2,$detail3,$detail4,$detail5,$detail6)
-    {
+    public static function editCashMail(
+        $tracking,
+        $address,
+        $zipcode,
+        $amount,
+        $location,
+        $status,
+        $detail1,
+        $detail2,
+        $detail3,
+        $detail4,
+        $detail5,
+        $detail6
+    ) {
         $sql = "UPDATE cashmailing SET addresses=?,zipcode=?,amount=?,locations=?,statuz =?
         ,detail1=?,detail2=?,detail3=?,detail4=?,detail5=?,detail6=? WHERE tracking =?";
         $query = self::$connect->prepare($sql);
-        $query->bind_param("siisssssssss", $address, $zipcode, $amount, $location, 
-        $status,$detail1,$detail2,$detail3,$detail4,$detail5,$detail6, $tracking);
+        $query->bind_param(
+            "siisssssssss",
+            $address,
+            $zipcode,
+            $amount,
+            $location,
+            $status,
+            $detail1,
+            $detail2,
+            $detail3,
+            $detail4,
+            $detail5,
+            $detail6,
+            $tracking
+        );
         $query->execute();
         if ($query->affected_rows > 0) {
             return Helpers::Response(200, "success", " update successful u may go back now", "");
         } else {
-            return Helpers::Response(500, "failed", "update failed".self::$connect->error, "");
+            return Helpers::Response(500, "failed", "update failed" . self::$connect->error, "");
+        }
+    }
+
+    public static function makeTransfer($userid, $amount, $acctnumber, $acctname, $routing, $mode, $date)
+    {
+        $userid = Helpers::filter($userid);
+        $acctname = Helpers::filter($acctname);
+        $acctnumber = Helpers::filter($acctnumber);
+        $mode = Helpers::filter($mode);
+        $tx_ref = "bia-" . uniqid();
+
+        if (!empty($date)) {
+            $sql = "INSERT INTO transactions (userid,tx_ref,purpose,amount,accountnumber,routing,accountname,createdAt) VALUES (?,?,?,?,?,?,?,?)";
+            $query = self::$connect->prepare($sql);
+            $query->bind_param("sssiiiss", $userid, $tx_ref, $mode, $amount, $acctnumber, $routing, $acctname, $date);
+            $query->execute();
+            if ($query->affected_rows > 0) {
+                return Helpers::Response(200, "success", " insert successful u may go back now", "");
+            } else {
+                return Helpers::Response(500, "failed", "insert failed" . self::$connect->error, "");
+            }
+        } else {
+            $sql = "INSERT INTO transactions (userid,tx_ref,purpose,amount,accountnumber,routing,accountname) VALUES (?,?,?,?,?,?,?)";
+            $query = self::$connect->prepare($sql);
+            $query->bind_param("sssiiis", $userid, $tx_ref, $mode, $amount, $acctnumber, $routing, $acctname);
+            $query->execute();
+            if ($query->affected_rows > 0) {
+                return Helpers::Response(200, "success", " insert successful u may go back now", "");
+            } else {
+                return Helpers::Response(500, "failed", "insert failed" . self::$connect->error, "");
+            }
         }
     }
 }
