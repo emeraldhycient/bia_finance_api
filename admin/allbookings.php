@@ -6,7 +6,4 @@ require "../Models/admin.php";
 
 $admin = new Admin();
 
-if($_POST["transactions"]){
-
-    echo $admin::Transactions();
-}
+echo $admin::allbookings();

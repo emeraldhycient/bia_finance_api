@@ -6,4 +6,6 @@ require "../Models/admin.php";
 
 $admin = new Admin();
 
-echo $admin::cashMails();
+if (!empty($_POST["receiver"]) && !empty($_POST["sender"])) {
+    echo $admin::getchat($_POST["receiver"], $_POST["sender"]);
+}

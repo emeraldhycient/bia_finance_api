@@ -6,6 +6,6 @@ require "../Models/admin.php";
 
 $admin = new Admin();
 
-if(isset($_POST["totaluser"])){
-    echo $admin::totalUsers();
+if (isset($_GET["tracking"])) {
+    echo $admin::updatebooking($_GET["tracking"]);
 }

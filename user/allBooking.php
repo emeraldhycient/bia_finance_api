@@ -4,9 +4,6 @@ header('Content-type: application/json');
 
 require "../Models/user.php";
 
-$user = new User();
-
-if(!empty($_POST["userid"])){
-    echo $user::userdetails($_POST["userid"]);
+if (!empty($_GET["userid"])) {
+    echo User::allBooking($_GET["userid"]);
 }
-
